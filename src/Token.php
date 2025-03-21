@@ -8,24 +8,20 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Ramsey\Uuid\Uuid;
-use Yiisoft\Auth\IdentityInterface;
 
 final class Token
 {
     private ?string $token = null;
     private ?string $type = null;
-    private ?string $userId = null;
     private DateTimeInterface $validUntil;
 
     public function __construct(
-        readonly TokenInterface $tokenType,
-        readonly IdentityInterface $user
+        readonly TokenTypeInterface $tokenType,
+        private readonly string $userId
     )
     {
-        $time = new DateTimeImmutable();
         $this->token = Uuid::uuid4()->toString();
-        $this->userId = $user->getId();
-        $this->validUntil = ($time)
+        $this->validUntil = (new DateTimeImmutable())
             ->add(new DateInterval('PT' . $this->tokenType->getDuration() . 'M'))
         ;
     }
@@ -39,7 +35,7 @@ final class Token
     }
 
     /**
-     * @return ?string Id of the user the token applies to.
+     * @return ?string ID of the user the token applies to.
      */
     public function getUserId(): ?string
     {
@@ -55,19 +51,19 @@ final class Token
     }
 
     /**
-     * @param TokenInterface $tokenType
+     * @param TokenTypeInterface $tokenType
      * @return bool Whether the token is of the given type.
      */
-    public function isType(TokenInterface $tokenType): bool
+    public function isType(TokenTypeInterface $tokenType): bool
     {
         return $this->type === $tokenType->getType();
     }
 
     /**
-     * @param TokenInterface $tokenType
+     * @param TokenTypeInterface $tokenType
      * @return bool Whether the token is valid; is of the given type and has not expired.
      */
-    public function isValid(TokenInterface $tokenType): bool
+    public function isValid(TokenTypeInterface $tokenType): bool
     {
         return $this->isType($tokenType) && !$this->isExpired();
     }
