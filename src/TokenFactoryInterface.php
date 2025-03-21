@@ -9,5 +9,5 @@ interface TokenFactoryInterface
     /**
      * @return string The token value
      */
-    public function create(): string;
+    public function createToken(): string;
 }
