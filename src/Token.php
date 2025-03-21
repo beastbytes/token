@@ -9,6 +9,16 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * Tokens data transfer object
+ *
+ * @psalm-type RawToken = array{
+ *      token: string,
+ *      type: string,
+ *      userId: string,
+ *      validUntil: int
+ *  }
+ */
 final class Token
 {
     private ?string $token = null;
@@ -17,7 +27,7 @@ final class Token
 
     public function __construct(
         readonly TokenTypeInterface $tokenType,
-        private readonly string $userId
+        private readonly string $userId,
     )
     {
         $this->token = Uuid::uuid4()->toString();
@@ -66,5 +76,18 @@ final class Token
     public function isValid(TokenTypeInterface $tokenType): bool
     {
         return $this->isType($tokenType) && !$this->isExpired();
+    }
+
+    /**
+     * @psalm-return RawToken
+     */
+    public function toArray(): array
+    {
+        return [
+            'token' => $this->token,
+            'type' => $this->type,
+            'user_id' => $this->userId,
+            'valid_until' => $this->validUntil->getTimestamp()
+        ];
     }
 }
