@@ -1,6 +1,6 @@
 {
     "name": "beastbytes/token",
-    "description": "Token management library to generate and validate version-4 UUID tokens",
+    "description": "Token management library to generate and validate tokens",
     "keywords": [
         "token",
         "UUID",
