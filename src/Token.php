@@ -7,7 +7,6 @@ namespace BeastBytes\Token;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Tokens data transfer object
@@ -21,33 +20,38 @@ use Ramsey\Uuid\Uuid;
  */
 final class Token
 {
-    private ?string $token = null;
     private ?string $type = null;
     private DateTimeInterface $validUntil;
 
+    /**
+     * @param string $token
+     * @param TokenTypeInterface $tokenType
+     * @param string $userId
+     * @throws \DateMalformedIntervalStringException // PHP >= 8.3
+     */
     public function __construct(
+        private readonly string $token,
         readonly TokenTypeInterface $tokenType,
         private readonly string $userId,
     )
     {
-        $this->token = Uuid::uuid4()->toString();
         $this->validUntil = (new DateTimeImmutable())
             ->add(new DateInterval('PT' . $this->tokenType->getDuration() . 'M'))
         ;
     }
 
     /**
-     * @return ?string The token value
+     * @return string The token value
      */
-    public function getToken(): ?string
+    public function getToken(): string
     {
         return $this->token;
     }
 
     /**
-     * @return ?string ID of the user the token applies to.
+     * @return string ID of the user the token applies to.
      */
-    public function getUserId(): ?string
+    public function getUserId(): string
     {
         return $this->userId;
     }
