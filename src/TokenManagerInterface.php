@@ -6,7 +6,7 @@ namespace BeastBytes\Token;
 
 interface TokenManagerInterface
 {
-    public function add(TokenTypeInterface $tokenType): bool;
+    public function add(TokenTypeInterface $tokenType, string $userId): bool;
     public function clear(): void;
     public function delete(Token $token): bool;
     public function exists(string $token): bool;
