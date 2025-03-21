@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BeastBytes\Token;
 
-trait TokenTrait
+trait TokenTypeTrait
 {
     /**
      * @return string The type of token.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BeastBytes\Token;
 
-interface TokenInterface
+interface TokenTypeInterface
 {
     /**
      * @return string The type of token.
