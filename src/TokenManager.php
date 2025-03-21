@@ -23,7 +23,7 @@ final class TokenManager implements TokenManagerInterface
     public function add(TokenTypeInterface $tokenType, string $userId): bool
     {
         $token = new Token(
-            $this->factory->create(),
+            $this->factory->createToken(),
             $tokenType,
             $userId
         );
