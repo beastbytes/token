@@ -9,6 +9,7 @@ use ReflectionException;
 use ReflectionProperty;
 
 /**
+ * Trait for creating a Token instance from a raw token array; used by TokenStorageInterface implementations.
  *
  * @psalm-type RawToken = array{
  *     token: string,
@@ -40,7 +41,12 @@ trait CreateTokenTrait
             'validUntil' => 'valid_until'
         ] as $property => $raw) {
             $reflectionProperty = new ReflectionProperty(Token::class, $property);
-            $reflectionProperty->setValue($token, $rawToken[$raw]);
+            $reflectionProperty->setValue(
+                $token,
+                $property === 'validUntil'
+                    ? $rawToken[$raw]
+                    : (new \DateTimeImmutable())->setTimestamp($rawToken[$raw])
+            );
         }
 
         return $token;
