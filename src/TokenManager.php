@@ -7,8 +7,8 @@ namespace BeastBytes\Token;
 final class TokenManager implements TokenManagerInterface
 {
     public function __construct(
-        private readonly TokenStorageInterface $storage,
         private readonly TokenFactoryInterface $factory,
+        private readonly TokenStorageInterface $storage,
     )
     {
     }
