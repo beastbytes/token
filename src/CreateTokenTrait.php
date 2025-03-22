@@ -22,8 +22,8 @@ trait CreateTokenTrait
     /**
      * A factory method for creating a Token instance.
      *
+     * @param array $rawToken
      * @psalm-param RawToken $rawToken
-     *
      * @return Token Token instance
      * @throws ReflectionException
      */
