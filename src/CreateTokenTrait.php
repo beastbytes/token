@@ -44,8 +44,8 @@ trait CreateTokenTrait
             $reflectionProperty->setValue(
                 $token,
                 $property === 'validUntil'
-                    ? $rawToken[$raw]
-                    : (new \DateTimeImmutable())->setTimestamp($rawToken[$raw])
+                    ? (new \DateTimeImmutable())->setTimestamp((int) $rawToken[$raw])
+                    : $rawToken[$raw]
             );
         }
 
