@@ -38,8 +38,12 @@ provide storage implementations for PHP files and databases respectively).
 TokenManager provides a simple interface for creating, retrieving, and deleting tokens; abstracting away the storage
 implementation.
 
+#### Configuration
+To use with Yii's dependency injection container, 
+see the configuration section of the token storage and factory packages.
+
 ### Token Types
-Token types define the purpose of a token and its duration; token types are therefore application specific
+Token types define the purpose of a token and its duration; token types are application specific
 and must be defined by the application.
 Token types are defined using an int backed enum that implements TokenTypeInterface; 
 the enum name is the token type and the int value is the token duration in minutes. Each token type must have a unique
