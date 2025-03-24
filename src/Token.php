@@ -31,12 +31,13 @@ final class Token
      */
     public function __construct(
         private readonly string $token,
-        readonly TokenTypeInterface $tokenType,
+        TokenTypeInterface $tokenType,
         private readonly string $userId,
     )
     {
+        $this->type = $tokenType->getType();
         $this->validUntil = (new DateTimeImmutable())
-            ->add(new DateInterval('PT' . $this->tokenType->getDuration() . 'M'))
+            ->add(new DateInterval('PT' . $tokenType->getDuration() . 'M'))
         ;
     }
 
@@ -75,7 +76,7 @@ final class Token
 
     /**
      * @param TokenTypeInterface $tokenType
-     * @return bool Whether the token is valid; is of the given type and has not expired.
+     * @return bool Whether the token is valid; is of the given type and is not expired.
      */
     public function isValid(TokenTypeInterface $tokenType): bool
     {
